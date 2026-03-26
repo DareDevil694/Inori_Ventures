@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inori Ventures | Institutional Strategic Advisory</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Montserrat:wght@300;400;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0a1424;
+            /* Premium Gradient Colors */
+            --gradient-start: #d4af37; /* Rich Gold */
+            --gradient-end: #f4e4c1;   /* Light Gold */
+            --text-dark: #1a1a1a;
+            --text-gray: #374151;
+            --dock-bg: rgba(10, 15, 25, 0.85); /* Translucent Black */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #fafafa;
+            color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.8;
+            scroll-behavior: smooth;
+        }
+
+        /* --- LOGO --- */
+        .logo-container {
+            position: absolute;
+            top: 40px;
+            left: 50px;
+            z-index: 1001;
+        }
+
+        .main-logo {
+            height: 48px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)) drop-shadow(0 4px 8px rgba(0,0,0,0.15)) drop-shadow(0 6px 12px rgba(0,0,0,0.1));
+            /* Path: C:\Users\aarav\OneDrive\Desktop\inori\inorilogo.jpg */
+        }
+
+        /* --- TRANSLUCENT BLACK DOCK --- */
+        .nav-dock-container {
+            position: fixed;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+            padding: 8px;
+            background: var(--dock-bg);
+            backdrop-filter: blur(25px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px) saturate(150%);
+            -webkit-backdrop-filter: blur(10px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            height: 90vh;
+            position: relative;
+        }
+
+        .hero-logo {
+            position: absolute;
+            top: 24%;
+            right: 50px;
+            height: 80px;
+            z-index: 1002;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+        }
+
+        .splash-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: #ffffff;
+            z-index: 2000;
+            transition: opacity 0.4s ease;
+        }
+
+        .splash-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .splash-logo {
+            height: 180px;
+            width: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 10px 24px rgba(0,0,0,0.3));
+        }
+
+        .splash-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--navy);
+            letter-spacing: 0.2rem;
+            font-weight: 900;
+        }
+
+        .hero {
+            height: 90vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .hero-video.fade-out {
+            opacity: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px) saturate(120%);
+            -webkit-backdrop-filter: blur(15px) saturate(120%);
+            padding: 60px 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero h1, .hero h2, .hero p {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 9vw, 6.5rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 900;
+            /* Gradient Text Effect */
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+            filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.15));
+        }
+
+        .hero h2 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-bottom: 35px;
+            filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        .hero p {
+            max-width: 700px;
+            font-size: 1.15rem;
+            color: #e0e7ff;
+            border-left: 3px solid var(--gradient-start);
+            padding-left: 30px;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 120px 10%;
+        }
+
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: var(--navy);
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 800;
+            text-decoration: underline;
+            text-decoration-color: var(--gradient-start);
+            text-decoration-thickness: 3px;
+        }
+
+        /* --- SERVICE CARDS --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            padding: 50px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            transition: 0.4s;
+        }
+
+        .service-card:hover {
+            border-color: var(--gradient-start);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.04);
+        }
+
+        .service-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--navy);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-bottom: 2px solid var(--gradient-start);
+            padding-bottom: 10px;
+        }
+
+        /* --- LEADERSHIP --- */
+        .leader-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--navy);
+            margin-bottom: 5px;
+            font-weight: 800;
+            border-bottom: 3px solid var(--gradient-start);
+            padding-bottom: 10px;
+        }
+
+        .leader-info .title {
+            color: var(--gradient-start);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+
+        .contact-box h4 {
+            font-family: 'Cinzel';
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .email-btn {
+            font-family: 'Playfair Display';
+            font-size: 2.2rem;
+            color: var(--gradient-end);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        /* --- CONTACT --- */
+        .contact-box {
+            background: var(--navy);
+            padding: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .contact-box { flex-direction: column; text-align: center; gap: 40px; }
+            .hero-content { padding: 40px 20px; }
+            .hero h1 { font-size: clamp(2.2rem, 10vw, 3.8rem); }
+            .hero h2 { font-size: 1.1rem; letter-spacing: 3px; }
+            .hero p { font-size: 1rem; max-width: 100%; }
+            .hero-logo { top: 20%; right: 25px; height: 70px; }
+            .nav-dock-container { bottom: 20px; gap: 4px; padding: 6px; }
+            .nav-item { padding: 10px 14px; font-size: 0.65rem; letter-spacing: 1.5px; }
+            .services-grid { gap: 20px; }
+            .service-card { padding: 30px; }
+            .contact-box { padding: 60px 20px; }
+            .section-header { font-size: 1.75rem; }
+            .leader-info h3 { font-size: 2rem; }
+            .contact-box h4 { font-size: 2rem; }
+        }
+
+        @media (max-width: 600px) {
+            .hero { height: auto; padding: 40px 4%; }
+            .hero-content { padding: 30px 16px; }
+            .hero-logo { top: 18%; right: 16px; height: 60px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero h2 { font-size: 1rem; letter-spacing: 2px; }
+            .nav-dock-container { left: 50%; transform: translateX(-50%); width: calc(100% - 24px); justify-content: center; }
+            .nav-item { padding: 8px 10px; font-size: 0.62rem; }
+            section { padding: 80px 6%; }
+            .leader-info h3 { font-size: 1.8rem; }
+            .service-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="splash-screen" id="splashScreen">
+        <img src="inori_logo.jpg" alt="Inori Ventures" class="splash-logo">
+        <div class="splash-title">Ventures</div>
+    </div>
+
+
+
+    <nav class="nav-dock-container">
+        <a href="#" class="nav-item">Home</a>
+        <a href="#about" class="nav-item">About</a>
+        <a href="#services" class="nav-item">Services</a>
+        <a href="#team" class="nav-item">Team</a>
+        <a href="#contact" class="nav-item">Contact</a>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <video autoplay muted class="hero-video" id="heroVideo">
+                <source src="ship.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <img src="inori_logo.jpg" alt="Inori Ventures" class="hero-logo">
+            <div class="hero-content">
+                <h2>Strategy & Growth</h2>
+                <h1>Inori Ventures</h1>
+                <p>Strategic, commercial, and sustainability-focused advisory for the global commodity sector. We move beyond theory to provide practical execution for complex value chains.</p>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2 class="section-header">Our Philosophy</h2>
+            <p style="font-size: 1.3rem; max-width: 850px; color: var(--text-gray); font-weight: 300;">
+                Inori Ventures combines deep commodity market expertise with rigorous financial analysis. Our work is grounded in real-world trading and commercial experience, ensuring that every strategy is actionable and commercially resilient.
+            </p>
+        </section>
+
+        <section id="services">
+            <h2 class="section-header">Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Market Advisory</h3>
+                    <p>Providing critical insights into market dynamics, pricing, and strategic positioning across physical and financial commodity markets.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Commercial Consulting</h3>
+                    <p>Strengthening performance and resilience across global supply and value chains through data-driven operational strategies.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Sustainability & ESG</h3>
+                    <p>Supporting businesses in embedding sustainability into core strategies while maintaining a sharp commercial edge.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="team">
+            <h2 class="section-header">Leadership</h2>
+            
+            <div class="leader-entry">
+                <div class="leader-info">
+                    <h3>Aditya Biyani</h3>
+                    <span class="title">Director</span>
+                    <p>Over 15 years of experience in global commodity trading and advisory across India, Singapore, UAE, UK, and the US. Formerly held lead roles at international banks and physical trading houses. CA, CMA, CFA, MBA.</p>
+                </div>
+            </div>
+
+            <div class="leader-entry">
+                <div class="leader-info">
+                    <h3>Alex Jordan</h3>
+                    <span class="title">VP - Commodities & Markets</span>
+                    <p>20+ years of experience in global commodity markets, specializing in risk management, market analysis, and strategic outlooks for agricultural and industrial commodities.</p>
+                </div>
+            </div>
+
+            <div class="leader-entry">
+                <div class="leader-info">
+                    <h3>Gabriela Lopez</h3>
+                    <span class="title">Associate - Research & Analytics</span>
+                    <p>Supports client engagements through deep market research and data analysis, focusing on commodity supply chains and emerging market sustainability metrics.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="contact-box">
+                <div>
+                    <h4>Inquire</h4>
+                    <p style="color: #a0aec0;">Global Strategic Advisory</p>
+                </div>
+                <div style="text-align: right;">
+                    <a href="mailto:info@inori.sg" class="email-btn">info@inori.sg</a>
+                    <p style="margin-top: 15px; letter-spacing: 2px; font-weight: 600; font-size: 0.9rem;">SINGAPORE HQ</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="padding: 100px 0 150px; text-align: center; color: var(--text-gray); font-size: 0.8rem; letter-spacing: 1px;">
+        &copy; 2026 Inori Ventures. All Rights Reserved.
+    </footer>
+
+    <script>
+        // Splash screen hide logic
+        const splashScreen = document.getElementById('splashScreen');
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                splashScreen.classList.add('hidden');
+                setTimeout(() => { splashScreen.style.display = 'none'; }, 500);
+            }, 1800);
+        });
+
+        // Hero video sequence
+        const heroVideo = document.getElementById('heroVideo');
+        const videoSequence = ['ship.mp4', 'windfarm.mp4', 'building.mp4', 'traffic.mp4'];
+        let currentVideoIndex = 0;
+
+        function playNextVideo() {
+            currentVideoIndex++;
+            if (currentVideoIndex >= videoSequence.length) {
+                currentVideoIndex = 0; // Loop back to the beginning
+            }
+            const nextVideo = videoSequence[currentVideoIndex];
+            heroVideo.src = nextVideo;
+            heroVideo.load();
+            heroVideo.play();
+        }
+
+        heroVideo.addEventListener('ended', playNextVideo);
+    </script>
+
+</body>
+</html>
